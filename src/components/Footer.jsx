@@ -39,6 +39,7 @@ const SocialIcon = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 const Center = styled.div`
@@ -123,7 +124,7 @@ const Footer = () => {
           123456
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +1 234 456 7890
+          <Phone style={{ marginRight: "10px" }} /> +1 234 567 8901
         </ContactItem>
         <ContactItem>
           <MailOutline style={{ marginRight: "10px" }} />{" "}

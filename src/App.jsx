@@ -1,10 +1,25 @@
 import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Announcement from "./components/Announcement";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Newsletter from "./components/Newsletter";
 import Home from "./pages/Home";
+import ProductList from "./pages/ProductList";
 
 const App = () => {
   return (
     <>
-      <Home />
+      <BrowserRouter>
+        <Announcement />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/productlist" element={<ProductList />}></Route>
+        </Routes>
+        <Newsletter />
+        <Footer />
+      </BrowserRouter>
     </>
   );
 };
