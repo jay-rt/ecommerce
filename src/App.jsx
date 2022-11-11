@@ -1,10 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Announcement from "./components/Announcement";
-// import Footer from "./components/Footer";
-// import Navbar from "./components/Navbar";
-// import Newsletter from "./components/Newsletter";
 import AppLayout from "./pages/AppLayout";
+import Cart from "./pages/Cart";
+import CartLayout from "./pages/CartLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
@@ -22,6 +20,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/product" element={<Product />} />
+          </Route>
+          <Route element={<CartLayout />}>
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </BrowserRouter>
