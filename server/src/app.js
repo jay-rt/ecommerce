@@ -2,7 +2,7 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import userRouter from "../routes/user.js";
+import authRouter from "../routes/auth.js";
 
 //configuring dotenv
 dotenv.config();
@@ -18,7 +18,7 @@ const main = async () => {
 const app = express();
 
 app.use(express.json());
-app.use("/api/users", userRouter);
+app.use("/api/users", authRouter);
 
 //listening for connection at specific port
 app.listen(process.env.PORT || 5000, () => {
