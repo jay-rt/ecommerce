@@ -18,7 +18,7 @@ const main = async () => {
 const app = express();
 
 app.use(express.json());
-app.use("/api/users", authRouter);
+app.use("/api/auth", authRouter);
 
 //listening for connection at specific port
 app.listen(process.env.PORT || 5000, () => {
