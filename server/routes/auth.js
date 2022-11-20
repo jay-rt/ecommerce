@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../models/user.js";
 import CryptoJS from "crypto-js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -43,9 +44,15 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("Wrong credentials!");
     }
 
+    const accessToken = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: "30m" }
+    );
+
     //destructuring password from rest of the details
     const { password, ...others } = user._doc; //mongodb stores data inside a _doc dictionary
-    res.status(200).json(others);
+    res.status(200).json({ ...others, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
