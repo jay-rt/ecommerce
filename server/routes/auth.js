@@ -1,5 +1,5 @@
 import { Router } from "express";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
 
@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
-      { expiresIn: "30m" }
+      { expiresIn: "1h" }
     );
 
     //destructuring password from rest of the details

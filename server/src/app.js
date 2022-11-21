@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import authRouter from "../routes/auth.js";
+import userRouter from "../routes/user.js";
 
 //configuring dotenv
 dotenv.config();
@@ -19,6 +20,7 @@ const app = express();
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 //listening for connection at specific port
 app.listen(process.env.PORT || 5000, () => {
