@@ -2,10 +2,11 @@ import { Router } from "express";
 import User from "../models/User.js";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
+import { destructureUser } from "./verifyToken.js";
 
 const router = Router();
 
-//Register
+//REGISTER
 router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -18,13 +19,14 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const destructuredUser = destructureUser(savedUser);
+    res.status(201).json(destructuredUser);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//Login
+//LOGIN
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -50,9 +52,8 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    //destructuring password from rest of the details
-    const { password, ...others } = user._doc; //mongodb stores data inside a _doc dictionary
-    res.status(200).json({ ...others, accessToken });
+    const destructuredUser = destructureUser(user);
+    res.status(200).json({ ...destructuredUser, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
