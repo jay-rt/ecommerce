@@ -22,9 +22,7 @@ router.put("/:id", verifyTokenAndAuthorize, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      {
-        $set: req.body,
-      },
+      { $set: req.body },
       { new: true } //to return the updated user
     );
     const destructuredUser = destructureUser(updatedUser);
