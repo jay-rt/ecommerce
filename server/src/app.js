@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import authRouter from "../routes/auth.js";
 import userRouter from "../routes/user.js";
 import productRouter from "../routes/product.js";
+import cartRouter from "../routes/cart.js";
+import orderRouter from "../routes/order.js";
 
 //configuring dotenv
 dotenv.config();
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
+app.use("/api/orders", orderRouter);
 
 //listening for connection at specific port
 app.listen(process.env.PORT || 5000, () => {
