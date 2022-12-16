@@ -37,7 +37,8 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
-  const category = useLocation().pathname.split("/")[2];
+  const location = useLocation();
+  const category = location.pathname.split("/")[2];
 
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
@@ -56,7 +57,7 @@ const ProductList = () => {
 
   return (
     <Container>
-      <Title>Dresses</Title>
+      <Title>{category}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
