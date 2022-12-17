@@ -3,8 +3,10 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { addProduct } from "../redux/cartSlice";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -119,6 +121,10 @@ const Product = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -130,6 +136,8 @@ const Product = () => {
         });
         console.log("Product information received");
         setProduct(res.data);
+        setColor(res.data.color[0]);
+        setSize(res.data.size[0]);
       } catch (err) {
         console.log(err.message);
       }
@@ -150,6 +158,10 @@ const Product = () => {
     }
   };
 
+  const handleCart = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
+
   return (
     <Container>
       <ImageContainer>
@@ -164,12 +176,16 @@ const Product = () => {
           <Filter>
             <FilterTitle>Color</FilterTitle>
             {product.color?.map((colour) => (
-              <FilterColor color={colour} key={colour} />
+              <FilterColor
+                color={colour}
+                key={colour}
+                onClick={() => setColor(colour)}
+              />
             ))}
           </Filter>
           <Filter>
             <FilterTitle>Size</FilterTitle>
-            <FilterSize>
+            <FilterSize onChange={(event) => setSize(event.target.value)}>
               {product.size?.map((s) => (
                 <FilterSizeOption key={s}>{s.toUpperCase()}</FilterSizeOption>
               ))}
@@ -190,7 +206,7 @@ const Product = () => {
               }}
             />
           </AmountContainer>
-          <Button>ADD TO CART</Button>
+          <Button onClick={handleCart}>ADD TO CART</Button>
         </AddContainer>
       </InfoContainer>
     </Container>
