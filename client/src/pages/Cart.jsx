@@ -1,4 +1,5 @@
 import { Add, Remove } from "@mui/icons-material";
+import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -28,6 +29,7 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
+  cursor: pointer;
 `;
 
 const TopTexts = styled.div`
@@ -151,25 +153,39 @@ const Button = styled.button`
   background-color: #000;
   color: #fff;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   const cartItems = useSelector(cart);
+  const handleCheckout = async () => {
+    try {
+      const res = await axios.post("/api/checkout/payment", {
+        products: cartItems.products,
+      });
+      const url = res.data.url;
+      window.location = url;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Container>
       <Title>YOUR BAG</Title>
       <Top>
         <TopButton>CONTINUE SHOPPING</TopButton>
         <TopTexts>
-          <TopText>SHOPPING BAG (2)</TopText>
+          <TopText>SHOPPING BAG ({cartItems.quantity})</TopText>
           <TopText>Your Wishlist (0)</TopText>
         </TopTexts>
-        <TopButton type="filled">CHECKOUT NOW</TopButton>
+        <TopButton type="filled" onClick={handleCheckout}>
+          CHECKOUT NOW
+        </TopButton>
       </Top>
       <Bottom>
         <Info>
           {cartItems.products.map((product) => (
-            <Product>
+            <Product key={product._id}>
               <ProductDetail>
                 <Image src={product.img} />
                 <Details>
@@ -217,7 +233,7 @@ const Cart = () => {
             <SummaryItemText>Total</SummaryItemText>
             <SummaryItemPrice>$ {cartItems.total}</SummaryItemPrice>
           </SummaryItem>
-          <Button>CHECKOUT NOW</Button>
+          <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
         </Summary>
       </Bottom>
     </Container>
