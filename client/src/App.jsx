@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
 import Cart from "./pages/Cart";
 import CartLayout from "./pages/CartLayout";
@@ -9,15 +10,23 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import { currentUser } from "./redux/userSlice";
 
 const App = () => {
+  const user = useSelector(currentUser);
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/success" element={<Success />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/register"
+            element={user ? <Navigate to="/" replace={true} /> : <Register />}
+          />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" replace={true} /> : <Login />}
+          />
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/products/:category" element={<ProductList />} />

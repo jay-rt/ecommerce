@@ -22,7 +22,7 @@ const userSlice = createSlice({
   },
 });
 
-export const username = (state) => state.user.currentUser.username;
+export const currentUser = (state) => state.user.currentUser;
 export const user = (state) => state.user;
 export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
 export default userSlice.reducer;
