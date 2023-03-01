@@ -48,7 +48,7 @@ const New = ({ title, inputs }) => {
               </div>
             ))}
 
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </form>
         </div>
       </div>
