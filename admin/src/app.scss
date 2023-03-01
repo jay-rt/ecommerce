@@ -1,0 +1,73 @@
+.app {
+    background-color: var(--body-color);
+    font-family: var(--body-font);
+
+    .link {
+        text-decoration: none;
+    }
+
+    .main-container {
+        display: flex;
+
+        .main {
+            flex: 6;
+        }
+    }
+
+    &.dark {
+        --title-color: #999;
+        --text-color: gray;
+        --text-color-light: #999;
+        --accent-color: #6439ffb6;
+        --accent-color-alternate: #7551f8b6;
+        --accent-color-light: #333;
+        --body-color: #111;
+        --box-shadow: 0px 3px 4px 0px hsla(0, 0%, 0%, 0.14),
+            0px 3px 3px -2px hsla(0, 0%, 0%, 0.12),
+            0px 1px 8px 0px hsla(0, 0%, 0%, 0.2);
+        background-color: var(--body-color);
+        color: var(--text-color-light);
+
+        .navbar,
+        .sidebar {
+            border-color: var(--accent-color-light);
+
+            .search {
+                border-color: var(--text-color);
+            }
+        }
+
+        .chart-grid {
+            stroke: rgba(228, 228, 228, 0.2);
+        }
+
+        .basic-table {
+            background-color: var(--body-color);
+
+            .table-cell {
+                color: var(--text-color);
+            }
+
+            .status {
+                color: var(--text-color);
+            }
+        }
+
+        .datatable {
+            .datagrid {
+                color: var(--text-color);
+                border: none;
+
+                .btn,
+                .cell-with-status {
+                    color: var(--text-color);
+                    border: none;
+                }
+            }
+        }
+
+        input {
+            background-color: transparent;
+        }
+    }
+}

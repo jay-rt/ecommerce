@@ -1,0 +1,83 @@
+.new {
+
+    .top,
+    .bottom {
+        -webkit-box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow);
+        padding: var(--mb-10);
+        margin: var(--mb-20);
+
+        .title {
+            color: var(--title-color);
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+        }
+    }
+
+    .bottom {
+        display: flex;
+
+        .left {
+            flex: 1;
+            text-align: center;
+
+            .image {
+                width: 6.25rem;
+                height: 6.25rem;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+
+        .right {
+            flex: 2;
+
+            form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.25rem;
+
+                .form-input {
+                    width: 40%;
+
+                    .label-img {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.625rem;
+
+                        .icon {
+                            cursor: pointer;
+                        }
+                    }
+
+                    input {
+                        width: 100%;
+                        padding: var(--mb-05);
+                        border: none;
+                        border-bottom: 1px solid gray;
+
+                        &.file {
+                            display: none;
+                        }
+                    }
+                }
+
+                button {
+                    width: 9.375rem;
+                    padding: var(--mb-10);
+                    border: none;
+                    border-radius: 5px;
+                    background-color: var(--accent-color);
+                    color: var(--body-color);
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin-top: var(--mb-10);
+
+                    &:hover {
+                        background-color: var(--accent-color-alternate);
+                    }
+                }
+            }
+        }
+    }
+}

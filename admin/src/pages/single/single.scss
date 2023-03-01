@@ -1,0 +1,80 @@
+.single {
+    .top {
+        display: flex;
+        padding: var(--mb-20);
+        gap: 1.25rem;
+
+        .left {
+            flex: 1;
+            padding: var(--mb-20);
+            -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            border-radius: 5px;
+
+            .btn-edit {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: var(--mb-05);
+                font-size: var(--smallest-font-size);
+                color: var(--accent-color-alternate);
+                background-color: var(--accent-color-light);
+                border-radius: 0 5px;
+                cursor: pointer;
+            }
+
+            .item {
+                display: flex;
+                gap: 1.25rem;
+
+                .item-img {
+                    width: 7.75rem;
+                    height: 7.75rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .details {
+                    .item-title {
+                        margin-bottom: var(--mb-10);
+                        color: var(--text-color);
+                    }
+
+                    .item-detail {
+                        margin-bottom: var(--mb-10);
+                        font-size: var(--small-font-size);
+
+                        .item-key {
+                            font-weight: bold;
+                            color: var(--title-color);
+                            margin-right: var(--mb-05);
+                        }
+
+                        .item-value {
+                            font-weight: var(--font-light);
+                        }
+                    }
+                }
+            }
+        }
+
+        .right {
+            flex: 2;
+        }
+    }
+
+    .bottom {
+        padding: var(--mb-20);
+        -webkit-box-shadow: var(--box-shadow);
+        box-shadow: var(--box-shadow);
+        margin: var(--mb-10) var(--mb-20);
+    }
+
+    .title {
+        font-size: var(--normal-font-size);
+        font-weight: var(--font-medium);
+        color: var(--title-color);
+        margin-bottom: var(--mb-10);
+    }
+}

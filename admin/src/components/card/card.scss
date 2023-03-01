@@ -1,0 +1,17 @@
+.card {
+    flex: 1;
+    padding: var(--mb-20);
+    -webkit-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+
+    .card-title {
+        font-size: var(--normal-font-size);
+        font-weight: var(--font-medium);
+        color: var(--title-color);
+    }
+
+    .card-list {
+        list-style: none;
+    }
+}

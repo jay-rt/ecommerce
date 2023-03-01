@@ -1,0 +1,30 @@
+.basic-table {
+
+    .cell-wrapper {
+        display: flex;
+        align-items: center;
+
+        .image {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: var(--mb-10);
+        }
+    }
+
+    .status {
+        padding: var(--mb-05);
+        border-radius: 5px;
+
+        &.approved {
+            background-color: rgba(0, 128, 0, 0.2);
+            color: green;
+        }
+
+        &.pending {
+            background-color: rgba(218, 165, 32, 0.2);
+            color: goldenrod;
+        }
+    }
+}

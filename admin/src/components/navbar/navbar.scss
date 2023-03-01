@@ -1,0 +1,92 @@
+.navbar {
+    height: 3.125rem;
+    border: 0.5px solid rgb(230, 227, 227);
+    display: flex;
+    align-items: center;
+    font-size: var(--small-font-size);
+    color: var(--text-color);
+    background-color: var(--body-color);
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+
+    .left {
+        display: flex;
+        flex: 2;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--mb-20);
+
+        .logo {
+            color: var(--accent-color);
+            font-size: var(--h2-font-size);
+            font-weight: var(--font-bold);
+            margin-right: var(--mb-20);
+            cursor: pointer;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            border: 0.5px solid lightgray;
+            padding: var(--mb-04);
+
+            input {
+                border: none;
+                outline: none;
+                background-color: transparent;
+
+                &:placeholder {
+                    font-size: var(--small-font-size);
+                }
+            }
+        }
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 5;
+        padding: var(--mb-20);
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-right: var(--mb-20);
+            color: var(--title-colour);
+            position: relative;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--accent-color);
+            }
+
+            .icon {
+                font-size: var(--h3-font-size);
+            }
+
+            .counter {
+                width: 1rem;
+                height: 1rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                background-color: red;
+                color: white;
+                font-size: var(--smaller-font-size);
+                font-weight: var(--font-semi-bold);
+            }
+
+            .avatar {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+            }
+        }
+    }
+}

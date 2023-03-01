@@ -1,0 +1,30 @@
+.home {
+
+	.widgets,
+	.center {
+		display: flex;
+		padding: var(--mb-20);
+		gap: 1.25rem;
+	}
+
+	.center {
+		padding: var(--mb-05) var(--mb-20);
+	}
+
+	.table-container {
+		flex: 2;
+		-webkit-box-shadow: var(--box-shadow);
+		box-shadow: var(--box-shadow);
+		padding: var(--mb-20);
+		margin: var(--mb-20);
+		border-radius: 5px;
+
+		.list-title {
+			font-size: var(--normal-font-size);
+			font-weight: var(--font-medium);
+			color: var(--title-color);
+			margin-bottom: var(--mb-10);
+		}
+	}
+
+}

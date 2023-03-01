@@ -1,0 +1,86 @@
+.datatable {
+    padding: var(--mb-20);
+
+    .datatable-title {
+        width: 100%;
+        margin-bottom: var(--mb-10);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+            font-size: var(--h3-font-size);
+            font-weight: var(--font-medium);
+            color: var(--title-color);
+        }
+
+        .link {
+            text-decoration: none;
+            font-size: var(--normal-font-size);
+            font-weight: var(--font-regular);
+            color: green;
+            padding: var(--mb-05);
+            border: 1px solid green;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+
+    .cell-with-img {
+        display: flex;
+        align-items: center;
+
+        .cell-img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            margin-right: var(--mb-20);
+        }
+    }
+
+    .cell-with-status {
+        padding: var(--mb-05);
+        border-radius: 5px;
+
+        &.active {
+            color: green;
+            background-color: rgba(0, 128, 0, 0.15);
+        }
+
+        &.passive {
+            color: crimson;
+            background-color: rgba(220, 20, 60, 0.15);
+        }
+
+        &.pending {
+            color: goldenrod;
+            background-color: rgba(218, 165, 32, 0.15);
+        }
+    }
+
+    .cell-action {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .link {
+            text-decoration: none;
+        }
+
+        .btn {
+            padding: var(--mb-04) var(--mb-05);
+            border-radius: 5px;
+            cursor: pointer;
+
+            &.btn-view {
+                border: 1px dotted rgba(0, 0, 139, 0.5);
+                color: darkblue
+            }
+
+            &.btn-delete {
+                border: 1px dotted rgba(220, 20, 60, 0.5);
+                color: crimson;
+            }
+        }
+    }
+}

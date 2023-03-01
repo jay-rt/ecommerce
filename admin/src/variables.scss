@@ -1,0 +1,42 @@
+:root {
+    /*========== Colours ==========*/
+    --title-color: gray;
+    --text-color: #555;
+    --text-color-light: #999;
+    --accent-color: #6439ff;
+    --accent-color-alternate: #7451f8;
+    --accent-color-light: #ece8ff;
+    --body-color: #fff;
+
+    /*========== Shadow =============*/
+    --box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+
+    /*========== Font and typography ==========*/
+    --body-font: "Nunito", sans-serif;
+
+    /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px ... */
+    --big-font-size: 2rem;
+    --h1-font-size: 1.75rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --medium-font-size: 1.125rem;
+    --normal-font-size: 1rem;
+    --small-font-size: 0.875rem;
+    --smaller-font-size: 0.8125rem;
+    --smallest-font-size: 0.75rem;
+
+    /*========== Font weight ==========*/
+    --font-light: 300;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    --font-bold: 700;
+
+    /*========== Margin Bottom ==========*/
+    /* .25rem = 4px, .5rem = 8px, .75rem = 12px ... */
+    --mb-04: 0.25rem;
+    --mb-05: 0.3125rem;
+    --mb-10: 0.625rem;
+    --mb-15: 0.9375rem;
+    --mb-20: 1.25rem
+}
