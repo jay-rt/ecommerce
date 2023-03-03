@@ -3,9 +3,10 @@ import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartQuantity } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
+import { currentUser, logout } from "../redux/userSlice";
 
 const Container = styled.div`
   height: 60px;
@@ -69,6 +70,12 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const quantity = useSelector(cartQuantity);
+  const user = useSelector(currentUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <Container>
@@ -83,12 +90,20 @@ const Navbar = () => {
         <Logo>J.A.Y.R.T</Logo>
       </Center>
       <Right>
-        <Link to="/register">
-          <MenuItem>REGISTER</MenuItem>
-        </Link>
-        <Link to="/login">
-          <MenuItem>LOGIN</MenuItem>
-        </Link>
+        {user ? (
+          <MenuItem>{`HI, ${user.username.toUpperCase()}`}</MenuItem>
+        ) : (
+          <Link to="/register">
+            <MenuItem>REGISTER</MenuItem>
+          </Link>
+        )}
+        {user ? (
+          <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+        ) : (
+          <Link to="/login">
+            <MenuItem>LOGIN</MenuItem>
+          </Link>
+        )}
         <Link to="/cart">
           <MenuItem>
             <Badge badgeContent={quantity} color="primary">

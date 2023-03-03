@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { cartProducts } from "../redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { cartProducts, emptyCart } from "../redux/cartSlice";
 import { currentUser } from "../redux/userSlice";
 import { userRequest } from "../requestMethods";
 import styled from "styled-components";
@@ -14,6 +14,11 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const Span = styled.span`
+  font-weight: bold;
+  font-size: 32px;
+`;
+
 const Button = styled.button`
   padding: 10px;
   margin-top: 20px;
@@ -22,11 +27,27 @@ const Button = styled.button`
 
 const Success = () => {
   const [session, setSession] = useState("");
-  const [orderId, setOrderId] = useState("");
+  const [orderId, setOrderId] = useState(null);
   const location = useLocation();
   const sessionId = location.search.split("=")[1];
   const products = useSelector(cartProducts);
   const user = useSelector(currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const retriveSession = async () => {
+      try {
+        const res = await userRequest.post("/checkout/session", {
+          sessionId: sessionId,
+        });
+        setSession(res.data);
+        console.log("Retrived Session");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sessionId && retriveSession();
+  }, [sessionId]);
 
   useEffect(() => {
     const createOrder = async () => {
@@ -50,29 +71,26 @@ const Success = () => {
         console.log(err);
       }
     };
-    session && session.paymentStatus === "paid" && createOrder();
+    session &&
+      products.length !== 0 &&
+      session.paymentStatus === "paid" &&
+      createOrder();
   }, [products, session, user._id]);
 
   useEffect(() => {
-    const retriveSession = async () => {
-      try {
-        const res = await userRequest.post("/checkout/session", {
-          sessionId: sessionId,
-        });
-        setSession(res.data);
-        console.log("Retrived Session");
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    sessionId && retriveSession();
-  }, [sessionId]);
+    orderId &&
+      products.length !== 0 &&
+      dispatch(emptyCart()) &&
+      console.log("Emptied Cart");
+  }, [orderId, dispatch, products]);
 
   return (
     <Container>
-      {orderId
-        ? `Order has been created successfully. Your order id is ${orderId}`
-        : "Successful. Your order is being processed..."}
+      <Span>
+        {orderId
+          ? `Order has been created successfully. Your order id is ${orderId}`
+          : "Successful. Your order is being processed..."}
+      </Span>
       <Link to="/">
         <Button>Go to Homepage</Button>
       </Link>

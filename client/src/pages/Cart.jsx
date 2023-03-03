@@ -184,7 +184,7 @@ const Cart = () => {
       <Bottom>
         <Info>
           {cartItems.products.map((product) => (
-            <Product key={product._id}>
+            <Product key={product._id + product.color + product.size}>
               <ProductDetail>
                 <Image src={product.img} />
                 <Details>

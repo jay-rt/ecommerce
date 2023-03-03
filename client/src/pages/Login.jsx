@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { user } from "../redux/userSlice";
@@ -57,7 +58,7 @@ const Button = styled.button`
   }
 `;
 
-const Link = styled.a`
+const WebLink = styled(Link)`
   margin: 5px 0;
   font-size: 12px;
   text-decoration: underline;
@@ -87,19 +88,21 @@ const Login = () => {
           <Input
             type="text"
             placeholder="Username"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             type="password"
             placeholder="Password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleLogin} disabled={isFetching}>
             LOGIN
           </Button>
           {error && <Error>Something went wrong...</Error>}
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <WebLink>FORGOT THE PASSWORD?</WebLink>
+          <WebLink to="/register">CREATE A NEW ACCOUNT</WebLink>
         </Form>
       </Wrapper>
     </Container>
