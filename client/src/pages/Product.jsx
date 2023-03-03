@@ -1,12 +1,10 @@
 import { Add, Remove } from "@mui/icons-material";
-import axios from "axios";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { addProduct } from "../redux/cartSlice";
+import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -131,7 +129,7 @@ const Product = () => {
     const signal = controller.signal;
     const getProduct = async () => {
       try {
-        const res = await axios.get(`/api/products/find/${id}`, {
+        const res = await publicRequest.get(`/products/find/${id}`, {
           signal: signal,
         });
         console.log("Product information received");

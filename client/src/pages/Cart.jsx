@@ -1,9 +1,8 @@
 import { Add, Remove } from "@mui/icons-material";
-import axios from "axios";
-import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { cart } from "../redux/cartSlice";
+import { userRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -160,7 +159,7 @@ const Cart = () => {
   const cartItems = useSelector(cart);
   const handleCheckout = async () => {
     try {
-      const res = await axios.post("/api/checkout/payment", {
+      const res = await userRequest.post("/checkout/payment", {
         products: cartItems.products,
       });
       const url = res.data.url;
