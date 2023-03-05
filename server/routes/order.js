@@ -49,10 +49,13 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//GET ALL ORDERS
+//GET ORDERS
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const orders = await Order.find();
+    const query = req.query.new;
+    let orders = query
+      ? await Order.find().sort({ _id: -1 }).limit(5)
+      : await Order.find();
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json(err);

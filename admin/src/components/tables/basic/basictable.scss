@@ -2,15 +2,22 @@
 
     .cell-wrapper {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        gap: 0.5rem;
 
-        .image {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: var(--mb-10);
+        .product-wrapper {
+            display: flex;
+            align-items: center;
+
+            .image {
+                width: 2.25rem;
+                height: 2.25rem;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: var(--mb-10);
+            }
         }
+
     }
 
     .status {

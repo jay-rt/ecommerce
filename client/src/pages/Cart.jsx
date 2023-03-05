@@ -1,8 +1,8 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import useUserRequest from "../hooks/useUserRequest";
 import { cart } from "../redux/cartSlice";
-import { userRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -157,6 +157,7 @@ const Button = styled.button`
 
 const Cart = () => {
   const cartItems = useSelector(cart);
+  const userRequest = useUserRequest();
   const handleCheckout = async () => {
     try {
       const res = await userRequest.post("/checkout/payment", {

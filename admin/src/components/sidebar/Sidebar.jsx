@@ -12,8 +12,15 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import "./sidebar.scss";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/userSlice";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="sidebar">
       <ul>
@@ -70,7 +77,7 @@ const Sidebar = () => {
           <AccountCircleOutlinedIcon className="icon" />
           <span>Profile</span>
         </li>
-        <li>
+        <li onClick={handleLogout}>
           <ExitToAppIcon className="icon" />
           <span>Logout</span>
         </li>

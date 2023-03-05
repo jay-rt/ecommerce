@@ -1,25 +1,27 @@
 .card-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin: var(--mb-20) 0;
+    justify-content: space-between;
 
     .card-img {
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
         object-fit: cover;
+        margin-right: var(--mb-20);
     }
 
     .card-user {
         display: flex;
         flex-direction: column;
+        flex: 1;
 
-        .username {
+        .fullname {
             font-weight: var(--font-semi-bold);
         }
 
-        .position {
+        .username {
             font-weight: var(--font-light);
         }
     }

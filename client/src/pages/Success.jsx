@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartProducts, emptyCart } from "../redux/cartSlice";
 import { currentUser } from "../redux/userSlice";
-import { userRequest } from "../requestMethods";
 import styled from "styled-components";
+import useUserRequest from "../hooks/useUserRequest";
 
 const Container = styled.div`
   height: 100vh;
@@ -33,6 +33,7 @@ const Success = () => {
   const products = useSelector(cartProducts);
   const user = useSelector(currentUser);
   const dispatch = useDispatch();
+  const userRequest = useUserRequest();
 
   useEffect(() => {
     const retriveSession = async () => {
@@ -47,22 +48,29 @@ const Success = () => {
       }
     };
     sessionId && retriveSession();
-  }, [sessionId]);
+  }, [sessionId, userRequest]);
 
   useEffect(() => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
           userId: user._id,
-          products: products.map((product) => ({
-            productId: product._id,
-            quantity: session.lineItems.find(
+          fullname: `${user.firstname} ${user.lastname}`,
+          products: products.map((product) => {
+            const orderedProduct = session.lineItems.find(
               (item) => item.description === product.name
-            ).quantity,
-            size: product.size,
-            color: product.color,
-          })),
-          amount: session.total,
+            );
+            return {
+              productId: product._id,
+              productName: product.name,
+              productImg: product.img,
+              quantity: orderedProduct.quantity,
+              price: orderedProduct.amount_total / 100,
+              size: product.size,
+              color: product.color,
+            };
+          }),
+          amount: session.total / 100,
           address: session.address,
         });
         setOrderId(res.data._id);
@@ -75,7 +83,7 @@ const Success = () => {
       products.length !== 0 &&
       session.paymentStatus === "paid" &&
       createOrder();
-  }, [products, session, user._id]);
+  }, [products, session, user, userRequest]);
 
   useEffect(() => {
     orderId &&

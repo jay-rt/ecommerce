@@ -23,7 +23,8 @@
     "react-router-dom": "^6.8.1",
     "recharts": "^2.4.3",
     "redux-persist": "^6.0.0",
-    "sass": "^1.58.3"
+    "sass": "^1.58.3",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
