@@ -8,16 +8,7 @@ import {
 } from "recharts";
 import "./chart.scss";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
-
-const Chart = ({ title, aspect }) => {
+const Chart = ({ title, aspect, data }) => {
   return (
     <div className="chart">
       <h1 className="title">{title}</h1>
@@ -34,12 +25,12 @@ const Chart = ({ title, aspect }) => {
               <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" stroke="gray" />
+          <XAxis dataKey="month" stroke="gray" />
           <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="Total"
+            dataKey="total"
             stroke="#8884d8"
             fillOpacity={1}
             fill="url(#total)"

@@ -4,22 +4,36 @@ import BasicTable from "../../components/tables/basic/Basictable";
 import Widget from "../../components/widget/Widget";
 import useValues from "../../hooks/useValues";
 import "./home.scss";
+import useUserStats from "../../hooks/useUserStats";
+import { widgetData } from "../../widgetData";
+import useIncome from "../../hooks/useIncome";
 
 const Home = () => {
   const users = useValues("users");
   const orders = useValues("orders");
+  const userStats = useUserStats();
+  const income = useIncome();
+  console.log(income);
 
   return (
     <div className="home">
       <div className="widgets">
-        <Widget type="user" />
-        <Widget type="order" />
-        <Widget type="earning" />
-        <Widget type="balance" />
+        <Widget data={widgetData.user} />
+        <Widget
+          data={widgetData.order}
+          current={income.current}
+          previous={income.previous}
+        />
+        <Widget data={widgetData.earning} />
+        <Widget data={widgetData.balance} />
       </div>
       <div className="center">
         <Card users={users} />
-        <Chart title="Last 6 Months (Revenue)" aspect={2.5 / 1} />
+        <Chart
+          title="New Users (Last Year)"
+          aspect={2.5 / 1}
+          data={userStats}
+        />
       </div>
 
       <div className="table-container">
