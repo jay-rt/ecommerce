@@ -1,7 +1,7 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import "./carditem.scss";
+import "./usercarditem.scss";
 
-const CardItem = ({ user }) => {
+const UserCardItem = ({ user }) => {
   return (
     <li className="card-item">
       <img
@@ -24,4 +24,4 @@ const CardItem = ({ user }) => {
   );
 };
 
-export default CardItem;
+export default UserCardItem;

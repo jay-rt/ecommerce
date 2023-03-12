@@ -14,11 +14,13 @@ import "./sidebar.scss";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/userSlice";
+import { emptyProduct } from "../../redux/productSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(emptyProduct());
   };
 
   return (

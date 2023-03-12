@@ -1,4 +1,4 @@
-.card {
+.user-card {
     flex: 1;
     padding: var(--mb-20);
     -webkit-box-shadow: var(--box-shadow);
@@ -11,7 +11,7 @@
         color: var(--title-color);
     }
 
-    .card-list {
+    .user-card-list {
         list-style: none;
     }
 }

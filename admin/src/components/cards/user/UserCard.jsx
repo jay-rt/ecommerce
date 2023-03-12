@@ -1,9 +1,9 @@
-import "./card.scss";
-import CardItem from "./CardItem";
+import "./usercard.scss";
+import CardItem from "./UserCardItem";
 
-const Card = ({ users }) => {
+const UserCard = ({ users }) => {
   return (
-    <div className="card">
+    <div className="user-card">
       <h1 className="card-title">Newly Joined Members</h1>
       <ul className="card-list">
         {users.map((user) => (
@@ -14,4 +14,4 @@ const Card = ({ users }) => {
   );
 };
 
-export default Card;
+export default UserCard;

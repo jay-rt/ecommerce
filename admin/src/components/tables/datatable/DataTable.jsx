@@ -1,15 +1,16 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { deleteProduct } from "../../../redux/apiCalls";
 import "./datatable.scss";
 
 const DataTable = ({ rows, columns, title }) => {
-  const [data, setData] = useState(rows);
   const location = useLocation();
   const link = location.pathname;
+  const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    deleteProduct(dispatch, id);
   };
   const actionColumn = [
     {
@@ -19,12 +20,12 @@ const DataTable = ({ rows, columns, title }) => {
       renderCell: (params) => {
         return (
           <div className="cell-action">
-            <Link to={`${link}/${params.row.id}`} className="link">
+            <Link to={`${link}/${params.row._id}`} className="link">
               <div className="btn btn-view">View</div>
             </Link>
             <div
               className="btn btn-delete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row._id)}
             >
               Delete
             </div>
@@ -43,7 +44,8 @@ const DataTable = ({ rows, columns, title }) => {
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={rows}
+        getRowId={(row) => row._id}
         columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}

@@ -9,7 +9,7 @@ const Widget = ({ data, current, previous }) => {
 
   const percentage = current
     ? previous !== 0
-      ? ((current - previous) / previous) * 100
+      ? Math.floor(((current - previous) / previous) * 100)
       : 100
     : diff;
 

@@ -16,20 +16,26 @@ const months = [
   "Dec",
 ];
 
-const useUserStats = () => {
-  const [userStats, setUserStats] = useState([]);
+const useStats = (link, title) => {
+  const [stats, setStats] = useState([]);
   const userRequst = useUserRequest();
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    const getUserStats = async () => {
+    const getStats = async () => {
       try {
-        const res = await userRequst.get("/users/stats", { signal: signal });
-        console.log("Setting user stats");
-        setUserStats(
-          res.data.map((item) => ({
+        const res = await userRequst.get(link, { signal: signal });
+        console.log(`Setting ${title} stats`);
+        let data = res.data;
+        if (data.length === 1) {
+          const prev = { _id: data[0]._id - 1, total: 0 };
+          data.push(prev);
+        }
+        data = res.data.sort((a, b) => a._id - b._id);
+        setStats(
+          data.map((item) => ({
             month: months[item._id - 1],
             total: item.total,
           }))
@@ -39,14 +45,14 @@ const useUserStats = () => {
       }
     };
 
-    getUserStats();
+    getStats();
 
     return () => {
       controller.abort();
     };
   }, []);
 
-  return userStats;
+  return stats;
 };
 
-export default useUserStats;
+export default useStats;

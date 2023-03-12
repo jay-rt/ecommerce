@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useUserRequest from "./useUserRequest";
 
-const useValues = (value) => {
+const useValues = (link, title) => {
   const [values, setValues] = useState([]);
   const userRequest = useUserRequest();
   useEffect(() => {
@@ -9,10 +9,10 @@ const useValues = (value) => {
     const signal = controller.signal;
     const getValues = async () => {
       try {
-        const res = await userRequest.get(`/${value}?new=true`, {
+        const res = await userRequest.get(link, {
           signal: signal,
         });
-        console.log(`${value} info received`);
+        console.log(`${title} info received`);
         setValues(res.data);
       } catch (err) {
         console.log(err.message);

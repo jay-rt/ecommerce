@@ -38,7 +38,7 @@ const New = ({ title, inputs }) => {
             </div>
             {inputs.map((input) => (
               <div className="form-input" key={input.id}>
-                <label htmlFor="input.id">{input.label}:</label>
+                <label htmlFor={input.id}>{input.label}:</label>
                 <input
                   type={input.type}
                   placeholder={input.placeholder}
