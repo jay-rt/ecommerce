@@ -3,7 +3,7 @@ import "./app.scss";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import New from "./pages/new/New";
-import { productInputs, userInputs } from "./form-source";
+import { userInputs } from "./form-source";
 import { useSelector } from "react-redux";
 import { dark } from "./redux/themeSlice";
 import { currentUser } from "./redux/userSlice";
@@ -14,6 +14,7 @@ import ProductList from "./pages/lists/ProductList";
 import SingleUser from "./pages/single/SingleUser";
 import SingleProduct from "./pages/single/SingleProduct";
 import NewProduct from "./pages/new/NewProduct";
+import EditProduct from "./pages/edit/EditProduct";
 
 const App = () => {
   const darkMode = useSelector(dark);
@@ -44,6 +45,7 @@ const App = () => {
                   <Route index element={<ProductList />} />
                   <Route path=":id" element={<SingleProduct />} />
                   <Route path="new" element={<NewProduct />} />
+                  <Route path="edit/:id" element={<EditProduct />} />
                 </Route>
               </Route>
             </>

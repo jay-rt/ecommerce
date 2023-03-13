@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import "./infocard.scss";
 
-const InfoCard = ({ title, img, data }) => {
+const InfoCard = ({ title, img, data, link }) => {
   return (
     <div className="info-card">
-      <div className="btn-edit">Edit</div>
+      <Link to={link} className="link">
+        <div className="btn-edit">Edit</div>
+      </Link>
       <h1 className="title">Information</h1>
       <div className="item">
         <img

@@ -1,6 +1,7 @@
 import {
   addProductSuccess,
   deleteProductSuccess,
+  updateProductSuccess,
   productFailure,
   productStart,
 } from "../redux/productSlice";
@@ -21,6 +22,18 @@ const useApiCalls = (name) => {
     }
   };
 
+  //UPDATING A PRODUCT
+  const updateProduct = async (dispatch, product, id) => {
+    dispatch(productStart());
+    try {
+      const res = await userRequest.put(`/products/${id}`, product);
+      console.log("Product successfully updated");
+      dispatch(updateProductSuccess({ id: id, product: res.data }));
+    } catch (err) {
+      dispatch(productFailure());
+    }
+  };
+
   //DELETING A PRODUCT
   const deleteProduct = async (dispatch, id) => {
     dispatch(productStart());
@@ -34,6 +47,8 @@ const useApiCalls = (name) => {
 
   if (name === "addProduct") {
     return addProduct;
+  } else if (name === "updateProduct") {
+    return updateProduct;
   } else if (name === "deleteProduct") {
     return deleteProduct;
   }

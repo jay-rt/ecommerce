@@ -1,16 +1,19 @@
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import InfoCard from "../../components/cards/info/InfoCard";
 import Chart from "../../components/chart/Chart";
 import Basictable from "../../components/tables/basic/Basictable";
 import useStats from "../../hooks/useStats";
 import useValues from "../../hooks/useValues";
+import { allProducts } from "../../redux/productSlice";
 import "./single.scss";
 
 const SingleProduct = () => {
   const { id } = useParams();
-  const product = useValues(`/products/find/${id}`, "Product");
+  const products = useSelector(allProducts);
+  const product = products.length !== 0 && products.find((p) => p._id === id);
   const income = useStats(`/orders/income?pid=${id}`, "income");
-  const orders = useValues(`/orders/product/${id}`);
+  const orders = useValues(`/orders/product/${id}`, "Orders");
 
   const data = [
     { id: "id", label: "ID: ", value: product._id },

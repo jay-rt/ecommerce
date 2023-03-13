@@ -23,6 +23,12 @@ const productSlice = createSlice({
       state.isFetching = false;
       state.products.push(action.payload);
     },
+    updateProductSuccess: (state, action) => {
+      state.isFetching = false;
+      state.products[
+        state.products.findIndex((item) => item._id === action.payload.id)
+      ] = action.payload.product;
+    },
     deleteProductSuccess: (state, action) => {
       state.isFetching = false;
       state.products.splice(
@@ -43,6 +49,7 @@ export const {
   productFailure,
   getProductSuccess,
   addProductSuccess,
+  updateProductSuccess,
   deleteProductSuccess,
   emptyProduct,
 } = productSlice.actions;

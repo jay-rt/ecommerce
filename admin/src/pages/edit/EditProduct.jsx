@@ -1,6 +1,6 @@
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getStorage,
   ref,
@@ -8,26 +8,20 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import useApiCalls from "../../hooks/useApiCalls";
-import "./new.scss";
+import "./edit.scss";
 import app from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { allProducts } from "../../redux/productSlice";
 
-const initialInput = {
-  name: "",
-  description: "",
-  categories: [],
-  size: [],
-  color: [],
-  price: 0,
-  inStock: true,
-};
-
-const NewProduct = () => {
+const EditProduct = () => {
+  const { id } = useParams();
+  const products = useSelector(allProducts);
+  const product = products.length !== 0 && products.find((p) => p._id === id);
   const [file, setFile] = useState("");
-  const [input, setInput] = useState(initialInput);
+  const [input, setInput] = useState(product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const addProduct = useApiCalls("addProduct");
+  const updateProduct = useApiCalls("updateProduct");
 
   const uploadToFirebase = () => {
     const filename = new Date().getTime() + "_" + file.name;
@@ -58,10 +52,7 @@ const NewProduct = () => {
       async () => {
         // Upload completed successfully, now we can get the download URL
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        addProduct(dispatch, { ...input, img: downloadURL });
-        setFile("");
-        setInput(initialInput);
-        navigate("/products");
+        updateProduct(dispatch, { ...input, img: downloadURL }, id);
       }
     );
   };
@@ -82,22 +73,21 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    file && uploadToFirebase();
+    file ? uploadToFirebase() : updateProduct(dispatch, input, id);
+    setFile("");
+    setInput({});
+    navigate(`/products/${id}`);
   };
 
   return (
-    <div className="new">
+    <div className="edit">
       <div className="top">
-        <h1 className="title">{"Add New Product"}</h1>
+        <h1 className="title">Update Product</h1>
       </div>
       <div className="bottom">
         <div className="left">
           <img
-            src={
-              file
-                ? URL.createObjectURL(file)
-                : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-            }
+            src={file ? URL.createObjectURL(file) : input.img}
             alt=""
             className="image"
           />
@@ -185,7 +175,12 @@ const NewProduct = () => {
             </div>
             <div className="form-input">
               <label htmlFor="stock">Stock</label>
-              <select name="inStock" id="stock" onChange={handleChange}>
+              <select
+                name="inStock"
+                id="stock"
+                onChange={handleChange}
+                defaultValue={input.inStock}
+              >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
@@ -201,4 +196,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default EditProduct;
