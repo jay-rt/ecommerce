@@ -1,13 +1,14 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { deleteProduct } from "../../../redux/apiCalls";
+import useApiCalls from "../../../hooks/useApiCalls";
 import "./datatable.scss";
 
 const DataTable = ({ rows, columns, title }) => {
   const location = useLocation();
   const link = location.pathname;
   const dispatch = useDispatch();
+  const deleteProduct = useApiCalls("deleteProduct");
 
   const handleDelete = (id) => {
     deleteProduct(dispatch, id);

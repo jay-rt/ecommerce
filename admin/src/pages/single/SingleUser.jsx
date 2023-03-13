@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfoCard from "../../components/cards/info/InfoCard";
 import Chart from "../../components/chart/Chart";
 import Basictable from "../../components/tables/basic/Basictable";
@@ -6,7 +6,7 @@ import useStats from "../../hooks/useStats";
 import useValues from "../../hooks/useValues";
 import "./single.scss";
 
-const Product = () => {
+const SingleUser = () => {
   const { id } = useParams();
   const user = useValues(`/users/find/${id}`, "User");
   const income = useStats(`/orders/income?uid=${id}`, "income");
@@ -36,4 +36,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default SingleUser;

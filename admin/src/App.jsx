@@ -9,10 +9,11 @@ import { dark } from "./redux/themeSlice";
 import { currentUser } from "./redux/userSlice";
 import Login from "./pages/login/Login";
 import Layout from "./layout/Layout";
-import Product from "./pages/single/Product";
-import User from "./pages/single/User";
 import UserList from "./pages/lists/UserList";
 import ProductList from "./pages/lists/ProductList";
+import SingleUser from "./pages/single/SingleUser";
+import SingleProduct from "./pages/single/SingleProduct";
+import NewProduct from "./pages/new/NewProduct";
 
 const App = () => {
   const darkMode = useSelector(dark);
@@ -33,7 +34,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/users">
                   <Route index element={<UserList />} />
-                  <Route path=":id" element={<User />} />
+                  <Route path=":id" element={<SingleUser />} />
                   <Route
                     path="new"
                     element={<New title="User" inputs={userInputs} />}
@@ -41,11 +42,8 @@ const App = () => {
                 </Route>
                 <Route path="/products">
                   <Route index element={<ProductList />} />
-                  <Route path=":id" element={<Product />} />
-                  <Route
-                    path="new"
-                    element={<New title="Product" inputs={productInputs} />}
-                  />
+                  <Route path=":id" element={<SingleProduct />} />
+                  <Route path="new" element={<NewProduct />} />
                 </Route>
               </Route>
             </>

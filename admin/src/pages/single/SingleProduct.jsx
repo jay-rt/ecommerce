@@ -6,7 +6,7 @@ import useStats from "../../hooks/useStats";
 import useValues from "../../hooks/useValues";
 import "./single.scss";
 
-const Product = () => {
+const SingleProduct = () => {
   const { id } = useParams();
   const product = useValues(`/products/find/${id}`, "Product");
   const income = useStats(`/orders/income?pid=${id}`, "income");
@@ -33,4 +33,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default SingleProduct;

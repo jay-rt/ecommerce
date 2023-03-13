@@ -50,7 +50,8 @@
                         }
                     }
 
-                    input {
+                    input,
+                    select {
                         width: 100%;
                         padding: var(--mb-05);
                         border: none;
