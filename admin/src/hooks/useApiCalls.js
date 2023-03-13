@@ -15,7 +15,7 @@ const useApiCalls = (name) => {
     try {
       const res = await userRequest.post("/products", product);
       console.log("New product successfully created");
-      dispatch(addProductSuccess(product));
+      dispatch(addProductSuccess(res.data));
     } catch (err) {
       dispatch(productFailure());
     }
@@ -25,7 +25,7 @@ const useApiCalls = (name) => {
   const deleteProduct = async (dispatch, id) => {
     dispatch(productStart());
     try {
-      // const res = await userRequest.delete(`/products/${id}`);
+      const res = await userRequest.delete(`/products/${id}`);
       dispatch(deleteProductSuccess(id));
     } catch (err) {
       dispatch(productFailure());

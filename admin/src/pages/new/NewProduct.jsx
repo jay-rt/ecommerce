@@ -1,35 +1,41 @@
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import useApiCalls from "../../hooks/useApiCalls";
 import "./new.scss";
+import app from "../../firebase";
 
-const initialProduct = {
+const initialInput = {
   name: "",
   description: "",
-  img: "",
   categories: [],
   size: [],
   color: [],
   price: 0,
-  inStock: false,
+  inStock: true,
 };
 
 const NewProduct = () => {
   const [file, setFile] = useState("");
-  const [product, setProduct] = useState(initialProduct);
+  const [input, setInput] = useState(initialInput);
   const dispatch = useDispatch();
   const addProduct = useApiCalls("addProduct");
 
   const handleChange = (e) => {
-    setProduct((prev) => ({
+    setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleArray = (e) => {
-    setProduct((prev) => ({
+    setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value.split(","),
     }));
@@ -37,7 +43,37 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addProduct(dispatch, product);
+    const filename = new Date().getTime() + "_" + file.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, filename);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {},
+      async () => {
+        // Upload completed successfully, now we can get the download URL
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        addProduct(dispatch, { ...input, img: downloadURL });
+      }
+    );
   };
 
   return (
@@ -72,25 +108,13 @@ const NewProduct = () => {
                 }}
               />
             </div>
-            {/* {inputs.map((input) => (
-              <div className="form-input" key={input.id}>
-                <label htmlFor={input.id}>{input.label}:</label>
-                <input
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  id={input.id}
-                  name={input.id}
-                />
-              </div>
-            ))} */}
-
             <div className="form-input">
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                value={product.name}
+                value={input.name}
                 placeholder="Name"
                 onChange={handleChange}
               />
@@ -101,7 +125,7 @@ const NewProduct = () => {
                 type="text"
                 id="desc"
                 name="description"
-                value={product.description}
+                value={input.description}
                 placeholder="Description"
                 onChange={handleChange}
               />
@@ -112,7 +136,7 @@ const NewProduct = () => {
                 type="text"
                 id="cat"
                 name="categories"
-                value={product.categories}
+                value={input.categories}
                 placeholder="men, summer"
                 onChange={handleArray}
               />
@@ -123,7 +147,7 @@ const NewProduct = () => {
                 type="text"
                 name="size"
                 id="size"
-                value={product.size}
+                value={input.size}
                 placeholder="s, m"
                 onChange={handleArray}
               />
@@ -134,7 +158,7 @@ const NewProduct = () => {
                 type="text"
                 name="color"
                 id="color"
-                value={product.color}
+                value={input.color}
                 placeholder="red, black"
                 onChange={handleArray}
               />
@@ -145,7 +169,7 @@ const NewProduct = () => {
                 type="number"
                 name="price"
                 id="price"
-                value={product.price}
+                value={input.price}
                 placeholder="29"
                 onChange={handleChange}
               />
