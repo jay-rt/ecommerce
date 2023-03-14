@@ -1,5 +1,5 @@
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import useApiCalls from "../../hooks/useApiCalls";
 import "./new.scss";

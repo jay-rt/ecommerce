@@ -2,8 +2,6 @@ import "./variables.scss";
 import "./app.scss";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
-import New from "./pages/new/New";
-import { userInputs } from "./form-source";
 import { useSelector } from "react-redux";
 import { dark } from "./redux/themeSlice";
 import { currentUser } from "./redux/userSlice";
@@ -15,6 +13,7 @@ import SingleUser from "./pages/single/SingleUser";
 import SingleProduct from "./pages/single/SingleProduct";
 import NewProduct from "./pages/new/NewProduct";
 import EditProduct from "./pages/edit/EditProduct";
+import NewUser from "./pages/new/NewUser";
 
 const App = () => {
   const darkMode = useSelector(dark);
@@ -36,10 +35,7 @@ const App = () => {
                 <Route path="/users">
                   <Route index element={<UserList />} />
                   <Route path=":id" element={<SingleUser />} />
-                  <Route
-                    path="new"
-                    element={<New title="User" inputs={userInputs} />}
-                  />
+                  <Route path="new" element={<NewUser />} />
                 </Route>
                 <Route path="/products">
                   <Route index element={<ProductList />} />
