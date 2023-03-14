@@ -1,17 +1,11 @@
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import useApiCalls from "../../hooks/useApiCalls";
 import "./edit.scss";
-import app from "../../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { allProducts } from "../../redux/productSlice";
+import useFirebase from "../../hooks/useFirebase";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -19,43 +13,29 @@ const EditProduct = () => {
   const product = products.length !== 0 && products.find((p) => p._id === id);
   const [file, setFile] = useState("");
   const [input, setInput] = useState(product);
+  const [submit, setSubmit] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const updateProduct = useApiCalls("updateProduct");
+  const url = useFirebase(file, submit);
 
-  const uploadToFirebase = () => {
-    const filename = new Date().getTime() + "_" + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, filename);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  useEffect(() => {
+    const noImgUpdate = () => {
+      updateProduct(dispatch, input, id);
+      navigate(`/products/${id}`);
+    };
 
-    // Listen for state changes, errors, and completion of the upload.
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {},
-      async () => {
-        // Upload completed successfully, now we can get the download URL
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        updateProduct(dispatch, { ...input, img: downloadURL }, id);
-      }
-    );
-  };
+    const imgUpdate = () => {
+      updateProduct(dispatch, { ...input, img: url }, id);
+      navigate(`/products/${id}`);
+    };
+    const editProduct = () => {
+      console.log("Product updated");
+      file ? url && imgUpdate() : noImgUpdate();
+      file ? console.log(url) : console.log("No url");
+    };
+    submit && editProduct();
+  }, [submit, file, url]);
 
   const handleChange = (e) => {
     setInput((prev) => ({
@@ -73,10 +53,7 @@ const EditProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    file ? uploadToFirebase() : updateProduct(dispatch, input, id);
-    setFile("");
-    setInput({});
-    navigate(`/products/${id}`);
+    setSubmit(true);
   };
 
   return (

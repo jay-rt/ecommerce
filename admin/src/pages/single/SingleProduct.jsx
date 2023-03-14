@@ -25,7 +25,12 @@ const SingleProduct = () => {
   return (
     <div className="single">
       <div className="top">
-        <InfoCard title={product.name} img={product.img} data={data} />
+        <InfoCard
+          title={product.name}
+          img={product.img}
+          data={data}
+          link={`/products/edit/${id}`}
+        />
         <Chart title="Sales Performance" aspect={3 / 1} data={income} />
       </div>
       <div className="bottom">

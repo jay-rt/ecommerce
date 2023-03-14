@@ -1,15 +1,9 @@
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import useApiCalls from "../../hooks/useApiCalls";
 import "./new.scss";
-import app from "../../firebase";
+import useFirebase from "../../hooks/useFirebase";
 import { useNavigate } from "react-router-dom";
 
 const initialInput = {
@@ -23,48 +17,22 @@ const initialInput = {
 };
 
 const NewProduct = () => {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
+  const [submit, setSubmit] = useState(false);
   const [input, setInput] = useState(initialInput);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const addProduct = useApiCalls("addProduct");
+  const url = useFirebase(file, submit);
 
-  const uploadToFirebase = () => {
-    const filename = new Date().getTime() + "_" + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, filename);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    // Listen for state changes, errors, and completion of the upload.
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {},
-      async () => {
-        // Upload completed successfully, now we can get the download URL
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        addProduct(dispatch, { ...input, img: downloadURL });
-        setFile("");
-        setInput(initialInput);
-        navigate("/products");
-      }
-    );
-  };
+  useEffect(() => {
+    const createProduct = () => {
+      addProduct(dispatch, { ...input, img: url });
+      console.log(url);
+      navigate("/products");
+    };
+    submit && url && createProduct();
+  }, [submit, url]);
 
   const handleChange = (e) => {
     setInput((prev) => ({
@@ -82,7 +50,7 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    file && uploadToFirebase();
+    setSubmit(true);
   };
 
   return (
