@@ -13,7 +13,11 @@ const productColumns = [
     renderCell: (params) => {
       return (
         <div className="cell-with-img">
-          <img className="cell-img" src={params.row.img} alt="product image" />
+          <img
+            className="cell-img"
+            src={params.row.img}
+            alt={params.row.name}
+          />
           {params.row.name}
         </div>
       );
@@ -47,7 +51,7 @@ const ProductList = () => {
 
   useEffect(() => {
     products.length === 0 && getProducts(dispatch);
-  }, [dispatch]);
+  }, [dispatch, products.length]);
 
   return <DataTable rows={products} columns={productColumns} title="Product" />;
 };

@@ -18,7 +18,7 @@ const months = [
 
 const useStats = (link, title) => {
   const [stats, setStats] = useState([]);
-  const userRequst = useUserRequest();
+  const userRequest = useUserRequest();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -26,7 +26,7 @@ const useStats = (link, title) => {
 
     const getStats = async () => {
       try {
-        const res = await userRequst.get(link, { signal: signal });
+        const res = await userRequest.get(link, { signal: signal });
         console.log(`Setting ${title} stats`);
         let data = res.data;
         if (data.length === 1) {
@@ -50,7 +50,7 @@ const useStats = (link, title) => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [link, title, userRequest]);
 
   return stats;
 };

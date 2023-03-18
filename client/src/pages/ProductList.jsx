@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Products from "../components/Products";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { mobile } from "../responsive";
+import useProducts from "../hooks/useProducts";
 
 const Container = styled.div``;
 
@@ -37,11 +38,25 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
-  const location = useLocation();
-  const category = location.pathname.split("/")[2];
-
+  const { category } = useParams();
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
+  const link = category ? `/products?categories=${category}` : "/products";
+  const products = useProducts(link);
+
+  const unique = (arr) => {
+    //creating new array with all sub-array elements concatenated
+    let uniqueArr = arr.flat();
+    //only storing unique values in array
+    uniqueArr = [...new Set(uniqueArr)];
+    return uniqueArr;
+  };
+
+  let colors = products.map((product) => product.color?.map((c) => c));
+  let sizes = products.map((product) => product.size?.map((s) => s));
+
+  colors = unique(colors);
+  sizes = unique(sizes);
 
   const handleFilters = (event) => {
     const { name, value } = event.target;
@@ -57,7 +72,7 @@ const ProductList = () => {
 
   return (
     <Container>
-      <Title>{category}</Title>
+      <Title>{category ? category : "Products"}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
@@ -65,37 +80,33 @@ const ProductList = () => {
             <Option value="color" disabled>
               Color
             </Option>
-            <Option value="pink">Pink</Option>
-            <Option value="black">Black</Option>
-            <Option value="red">Red</Option>
-            <Option value="orange">Orange</Option>
-            <Option value="cream">Cream</Option>
-            <Option value="green">Green</Option>
-            <Option value="gray">Gray</Option>
-            <Option value="yellow">Yellow</Option>
-            <Option value="brown">Brown</Option>
+            {colors.map((color) => (
+              <Option value={color} key={color}>
+                {color.toUpperCase()}
+              </Option>
+            ))}
           </Select>
           <Select name="size" onClick={handleFilters} defaultValue="size">
             <Option value="size" disabled>
               Size
             </Option>
-            <Option value="xs">XS</Option>
-            <Option value="s">S</Option>
-            <Option value="m">M</Option>
-            <Option value="l">L</Option>
-            <Option value="xl">XL</Option>
+            {sizes.map((size) => (
+              <Option value={size} key={size}>
+                {size.toUpperCase()}
+              </Option>
+            ))}
           </Select>
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
-          <Select onChange={handleSort}>
-            <Option value="newest">Newest</Option>
+          <Select onChange={handleSort} defaultValue="new">
+            <Option value="new">Newest</Option>
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>
-      <Products category={category} filters={filters} sort={sort} />
+      <Products products={products} filters={filters} sort={sort} />
     </Container>
   );
 };

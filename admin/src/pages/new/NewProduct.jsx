@@ -32,7 +32,7 @@ const NewProduct = () => {
       navigate("/products");
     };
     submit && url && createProduct();
-  }, [submit, url]);
+  }, [submit, url, addProduct, dispatch, input, navigate]);
 
   const handleChange = (e) => {
     setInput((prev) => ({

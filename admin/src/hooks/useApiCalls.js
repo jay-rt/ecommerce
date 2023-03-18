@@ -39,6 +39,7 @@ const useApiCalls = (name) => {
     dispatch(productStart());
     try {
       const res = await userRequest.delete(`/products/${id}`);
+      console.log(res.data);
       dispatch(deleteProductSuccess(id));
     } catch (err) {
       dispatch(productFailure());

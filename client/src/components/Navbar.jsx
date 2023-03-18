@@ -68,6 +68,11 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "0.75rem", marginLeft: "10px" })}
 `;
 
+const NavbarLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+`;
+
 const Navbar = () => {
   const quantity = useSelector(cartQuantity);
   const user = useSelector(currentUser);
@@ -85,32 +90,37 @@ const Navbar = () => {
           <Input placeholder="Search" />
           <Search style={{ color: "gray", fontSize: 16 }} />
         </SearchContainer>
+        <NavbarLink to="/products">
+          <MenuItem>PRODUCTS</MenuItem>
+        </NavbarLink>
       </Left>
       <Center>
-        <Logo>J.A.Y.R.T</Logo>
+        <NavbarLink to="/">
+          <Logo>J.A.Y.R.T</Logo>
+        </NavbarLink>
       </Center>
       <Right>
         {user ? (
           <MenuItem>{`HI, ${user.username.toUpperCase()}`}</MenuItem>
         ) : (
-          <Link to="/register">
+          <NavbarLink to="/register">
             <MenuItem>REGISTER</MenuItem>
-          </Link>
+          </NavbarLink>
         )}
         {user ? (
           <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
         ) : (
-          <Link to="/login">
+          <NavbarLink to="/login">
             <MenuItem>LOGIN</MenuItem>
-          </Link>
+          </NavbarLink>
         )}
-        <Link to="/cart">
+        <NavbarLink to="/cart">
           <MenuItem>
             <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlined color="action" />
             </Badge>
           </MenuItem>
-        </Link>
+        </NavbarLink>
       </Right>
     </Container>
   );

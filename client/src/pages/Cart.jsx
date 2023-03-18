@@ -197,7 +197,7 @@ const Cart = () => {
                   </ProductId>
                   <ProductColor color={product.color} />
                   <ProductSize>
-                    <b>Size:</b> {product.size}
+                    <b>Size:</b> {product.size.toUpperCase()}
                   </ProductSize>
                 </Details>
               </ProductDetail>

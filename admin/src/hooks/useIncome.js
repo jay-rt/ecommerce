@@ -25,7 +25,7 @@ const useIncome = () => {
       //cancels the requests before the components unmount
       controller.abort();
     };
-  }, []);
+  }, [userRequest]);
 
   if (income.length > 1) {
     current = income[1].total;

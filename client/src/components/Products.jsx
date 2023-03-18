@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { mobile } from "../responsive";
 import Product from "./Product";
 
@@ -12,37 +11,11 @@ const Container = styled.div`
   ${mobile({ padding: "0.5rem" })}
 `;
 
-const Products = ({ category, filters, sort }) => {
-  const [products, setProducts] = useState([]);
+const Products = ({ products, filters, sort }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(
-          category ? `/api/products?categories=${category}` : "/api/products",
-          {
-            signal: signal,
-          }
-        );
-        console.log("Products information recieved");
-        setProducts(res.data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    getProducts();
-
-    return () => {
-      //cancels the request before the components unmount
-      controller.abort();
-    };
-  }, [category]);
-
-  useEffect(() => {
-    category &&
+    filters &&
       setFilteredProducts(
         products.filter((product) =>
           Object.entries(filters).every(([key, value]) =>
@@ -50,10 +23,10 @@ const Products = ({ category, filters, sort }) => {
           )
         )
       );
-  }, [category, products, filters]);
+  }, [products, filters]);
 
   useEffect(() => {
-    if (sort === "newest") {
+    if (sort === "new") {
       setFilteredProducts((prevProducts) =>
         [...prevProducts].sort((a, b) => a.createdAt - b.createdAt)
       );
@@ -70,11 +43,9 @@ const Products = ({ category, filters, sort }) => {
 
   return (
     <Container>
-      {category
+      {filters
         ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
-        : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item._id} />)}
+        : products.map((item) => <Product item={item} key={item._id} />)}
     </Container>
   );
 };

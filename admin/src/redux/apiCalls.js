@@ -1,8 +1,6 @@
 import { loginFailure, loginStart, loginSuccess } from "./userSlice";
 import { publicRequest } from "../requestMethods";
 import {
-  addProductSuccess,
-  deleteProductSuccess,
   getProductSuccess,
   productFailure,
   productStart,

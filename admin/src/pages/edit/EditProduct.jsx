@@ -35,7 +35,7 @@ const EditProduct = () => {
       file ? console.log(url) : console.log("No url");
     };
     submit && editProduct();
-  }, [submit, file, url]);
+  }, [submit, file, url, dispatch, id, input, navigate, updateProduct]);
 
   const handleChange = (e) => {
     setInput((prev) => ({

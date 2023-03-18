@@ -24,7 +24,7 @@ const useValues = (link, title) => {
       //cancels the requests before the components unmount
       controller.abort();
     };
-  }, []);
+  }, [link, title, userRequest]);
 
   return values;
 };

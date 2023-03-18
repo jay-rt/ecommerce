@@ -51,6 +51,13 @@ const Success = () => {
   }, [sessionId, userRequest]);
 
   useEffect(() => {
+    orderId &&
+      products.length !== 0 &&
+      dispatch(emptyCart()) &&
+      console.log("Emptied Cart");
+  }, [orderId, dispatch, products]);
+
+  useEffect(() => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
@@ -84,13 +91,6 @@ const Success = () => {
       session.paymentStatus === "paid" &&
       createOrder();
   }, [products, session, user, userRequest]);
-
-  useEffect(() => {
-    orderId &&
-      products.length !== 0 &&
-      dispatch(emptyCart()) &&
-      console.log("Emptied Cart");
-  }, [orderId, dispatch, products]);
 
   return (
     <Container>
