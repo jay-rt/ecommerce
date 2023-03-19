@@ -1,4 +1,4 @@
-import DataTable from "../../components/tables/datatable/Datatable";
+import DataTable from "../../components/tables/datatable/DataTable";
 import useValues from "../../hooks/useValues";
 
 const userColumns = [
