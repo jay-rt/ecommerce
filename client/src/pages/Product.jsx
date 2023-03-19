@@ -1,9 +1,9 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { addProduct } from "../redux/cartSlice";
+import { addProduct, cartProducts, increseQuantity } from "../redux/cartSlice";
 import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
@@ -115,12 +115,12 @@ const Button = styled.button`
 `;
 
 const Product = () => {
-  const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const { id } = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const products = useSelector(cartProducts);
 
   const dispatch = useDispatch();
 
@@ -157,7 +157,16 @@ const Product = () => {
   };
 
   const handleCart = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    if (
+      products.some(
+        (item) =>
+          item._id === product._id && item.size === size && item.color === color
+      )
+    ) {
+      dispatch(increseQuantity({ id: product._id, price: product.price }));
+    } else {
+      dispatch(addProduct({ ...product, quantity, color, size }));
+    }
   };
 
   return (

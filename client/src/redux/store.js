@@ -17,6 +17,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["user"],
 };
 
 const rootReducer = combineReducers({ cart: cartReducer, user: userReducer });

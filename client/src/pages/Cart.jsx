@@ -1,8 +1,13 @@
 import { Add, Remove } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useUserRequest from "../hooks/useUserRequest";
-import { cart } from "../redux/cartSlice";
+import {
+  cart,
+  decreaseQuantity,
+  increseQuantity,
+  removeProduct,
+} from "../redux/cartSlice";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -158,6 +163,20 @@ const Button = styled.button`
 const Cart = () => {
   const cartItems = useSelector(cart);
   const userRequest = useUserRequest();
+  const dispatch = useDispatch();
+
+  const handleIncrease = (id, price) => {
+    dispatch(increseQuantity({ id, price }));
+  };
+
+  const handleDecrease = (id, price, quantity) => {
+    if (quantity === 1) {
+      dispatch(removeProduct({ id, price }));
+    } else {
+      dispatch(decreaseQuantity({ id, price }));
+    }
+  };
+
   const handleCheckout = async () => {
     try {
       const res = await userRequest.post("/checkout/payment", {
@@ -203,9 +222,19 @@ const Cart = () => {
               </ProductDetail>
               <PriceDetail>
                 <AmountContainer>
-                  <Add />
+                  <Add
+                    onClick={() => handleIncrease(product._id, product.price)}
+                  />
                   <Amount>{product.quantity}</Amount>
-                  <Remove />
+                  <Remove
+                    onClick={() =>
+                      handleDecrease(
+                        product._id,
+                        product.price,
+                        product.quantity
+                      )
+                    }
+                  />
                 </AmountContainer>
                 <ProductPrice>
                   {" "}
