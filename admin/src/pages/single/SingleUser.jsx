@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import InfoCard from "../../components/cards/info/InfoCard";
 import Chart from "../../components/chart/Chart";
-import Basictable from "../../components/tables/basic/Basictable";
+import Basictable from "../../components/tables/basic/BasicTable";
 import useStats from "../../hooks/useStats";
 import useValues from "../../hooks/useValues";
 import "./single.scss";
