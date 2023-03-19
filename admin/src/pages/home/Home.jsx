@@ -1,6 +1,6 @@
 import Chart from "../../components/chart/Chart";
 import UserCard from "../../components/cards/user/UserCard";
-import BasicTable from "../../components/tables/basic/Basictable";
+import BasicTable from "../../components/tables/basic/BasicTable";
 import Widget from "../../components/widget/Widget";
 import useValues from "../../hooks/useValues";
 import "./home.scss";
