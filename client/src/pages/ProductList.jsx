@@ -86,7 +86,7 @@ const ProductList = () => {
               </Option>
             ))}
           </Select>
-          <Select name="size" onClick={handleFilters} defaultValue="size">
+          <Select name="size" onChange={handleFilters} defaultValue="size">
             <Option value="size" disabled>
               Size
             </Option>
